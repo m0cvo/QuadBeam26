@@ -1,0 +1,70 @@
+﻿@page "/counter"
+@rendermode InteractiveWebAssembly
+
+<PageTitle>Quad Beam Designer</PageTitle>
+
+<h1>Quad Beam Designer</h1>
+<h3>Copyright &copy; Nigel Booth for Mogpie 2025</h3>
+<p>Use this designer to develop a 4 element quad beam antenna for any frequency from 1Mhz to 10Ghz.  </p>
+<img src="/images/Quad.jpg" height="300" />
+<img src="/images/Quad2.jpg" height="300" />
+
+<p>
+    <label>
+        Enter frequency in Mhz:
+        <input type="number" @bind="frequency" />
+    </label>
+    <button class="btn-link btn-primary" @onclick="Calculate">Enter</button>
+</p>
+<p role="status">@message</p>
+
+<p role="status">L1: @L1 metres per side</p>
+<p role="status">L2: @L2 metres per side</p>
+<p role="status">L3: @L3 metres per side</p>
+<p role="status">L4: @L4 metres per side</p>
+<p role="status">Spacing: @S metres</p>
+<br />
+<p>These are lengths per side so you will need to multiply by 4 for the total perimeter of the quad element.  The feedpoint impedance of the driven element is 50 Ohms so can be fed directly with coax or via a 1:1 BALUN.</p>
+
+<p>
+    <img src="/images/polarisation.jpg" />Place the feedpoint at the bottom for vertical polarisation or at the side for horizontal polarisation.
+
+</p>
+@code {
+
+    private double frequency { get; set; }
+
+    private double L1 = 0;
+    private double L2 = 0;
+    private double L3 = 0;
+    private double L4 = 0;
+    private double S = 0;
+    private string message = "";
+
+    private void Calculate()
+    {
+        if (frequency == 0 || frequency == double.NaN)
+        {
+            message = "Please enter a number > 0 and in the correct format!";
+            for (int i = 0; i < 10000; i++)
+            {
+                //Wasting time;
+            }
+            Reset();
+        }
+        L1 = Math.Round(78.7 / frequency, 4);
+        L2 = Math.Round(76.6 / frequency, 4);
+        L3 = Math.Round(74.3 / frequency, 4);
+        L4 = Math.Round(74.3 / frequency, 4);
+        S = Math.Round(43.3 / frequency, 4);
+    }
+
+    private void Reset()
+    {
+        frequency = 0;
+        L1 = L2 = L3 = L4 = S = 0;
+
+    }
+
+}
+

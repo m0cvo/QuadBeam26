@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="QuadBeam26.Client/QuadBeam26.Client.csproj" />
+  <Project Path="QuadBeam26/QuadBeam26.csproj" />
+</Solution>
